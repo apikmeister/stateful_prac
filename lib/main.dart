@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  String cityDetail = "";
+
   List<City> city = [
     City(code: "KUL", cityName: "Kuala Lumpur"),
     City(code: "AKL", cityName: "Auckland"),
@@ -22,21 +24,40 @@ class MyApp extends StatelessWidget {
       title: 'MyApp',
       home: Scaffold(
           appBar: AppBar(
-            title: Text('Fetch records into ListView'),
+            title: Text('Fetch records into ListView.builder'),
             centerTitle: true,
           ),
-          body: ListView(
-            children: city.map((e) {
-              return ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  selectedTileColor: Colors.grey[300],
-                  selected: true,
-                  leading: Icon(Icons.flight),
-                  title: Text(e.code),
-                  subtitle: Text(e.cityName),
-                  trailing: Icon(Icons.arrow_forward));
-            }).toList(),
+          body: ListView.builder(
+            itemCount: city.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: Text(
+                        city[index].code,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      city[index].cityName,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    trailing: Icon(Icons.more_vert),
+                    onTap: () {
+                      cityDetail = city[index].cityName;
+                      print('You tapped on $cityDetail');
+                    },
+                  ),
+                ),
+              );
+            },
           )),
     );
   }
