@@ -11,51 +11,73 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyStatefulApp(),
+      title: 'Dialog Box',
+      home: MyMainPage(),
     );
   }
 }
 
-class MyStatefulApp extends StatefulWidget {
+class MyMainPage extends StatefulWidget {
+  const MyMainPage({super.key});
+
   @override
-  _MyStatefulApp createState() => _MyStatefulApp();
+  State<MyMainPage> createState() => _MyMainPageState();
 }
 
-class _MyStatefulApp extends State<MyStatefulApp> {
+class _MyMainPageState extends State<MyMainPage> {
   String _inputText = '';
+  final myController = TextEditingController();
+
+  void _showInputDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Enter Text..!'),
+          content: TextField(
+            controller: myController,
+            decoration: const InputDecoration(hintText: 'Enter text'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _inputText = myController.text;
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Stateful App'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Dialog Box')),
       body: Center(
-        child: TextField(
-          decoration: InputDecoration(
-            hintText: 'Enter number here...!',
-          ),
-          onChanged: (value) {
-            if (int.parse(value) > 500) {
-              setState(() {
-                _inputText = 'Exceeded Credit Limit';
-              });
-            } else {
-              setState(() {
-                _inputText = 'Processing';
-              });
-            }
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              _inputText,
+              style: const TextStyle(fontSize: 20),
+            ),
+          ],
         ),
       ),
-      bottomSheet: Container(
-        alignment: Alignment.center,
-        height: 50,
-        child: Text(
-          '$_inputText',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showInputDialog,
+        child: const Icon(Icons.edit),
       ),
     );
   }
