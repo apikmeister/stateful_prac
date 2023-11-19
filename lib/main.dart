@@ -8,44 +8,45 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  List<City> city = [
+    City(code: "KUL", cityName: "Kuala Lumpur"),
+    City(code: "AKL", cityName: "Auckland"),
+    City(code: "DTM", cityName: "Dortmund"),
+    City(code: "LPL", cityName: "Liverpool"),
+    City(code: "IBZ", cityName: "Ibiza"),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    List<Student> students = [
-      Student(name: 'Muhammad Afiq', paymentStatus: 'Completed'),
-      Student(name: 'Ali Ahmad', paymentStatus: 'Pending'),
-      Student(name: 'Abu Murabbi', paymentStatus: 'Completed'),
-      Student(name: 'Ahmad Salah', paymentStatus: 'Completed'),
-      Student(name: 'Mohamad Sane', paymentStatus: 'Pending'),
-    ];
-
     return MaterialApp(
-      home: MaterialApp(
-          title: 'MyApp',
-          home: Scaffold(
-            appBar: AppBar(
-              title: Text('Student List'),
-              centerTitle: true,
-            ),
-            body: ListView(
-              children: students
-                  .where((e) => e.paymentStatus == 'Completed')
-                  .map((e) => ListTile(
-                        title: Text(e.name),
-                        subtitle: Text(e.paymentStatus),
-                      ))
-                  .toList(),
-            ),
+      title: 'MyApp',
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text('Fetch records into ListView'),
+            centerTitle: true,
+          ),
+          body: ListView(
+            children: city.map((e) {
+              return ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  selectedTileColor: Colors.grey[300],
+                  selected: true,
+                  leading: Icon(Icons.flight),
+                  title: Text(e.code),
+                  subtitle: Text(e.cityName),
+                  trailing: Icon(Icons.arrow_forward));
+            }).toList(),
           )),
     );
   }
 }
 
-class Student {
-  String name;
-  String paymentStatus;
+class City {
+  String code, cityName;
 
-  Student({
-    required this.name,
-    required this.paymentStatus,
+  City({
+    required this.code,
+    required this.cityName,
   });
 }
