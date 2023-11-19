@@ -8,36 +8,44 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  List<String> refBooks = [
-    "Java Servlet Programming",
-    "Front-end with Angular",
-    "Linux Administration",
-    "MongoDB for NoSQL",
-    "Microsoft Azure Security",
-  ];
-
   @override
   Widget build(BuildContext context) {
+    List<Student> students = [
+      Student(name: 'Muhammad Afiq', paymentStatus: 'Completed'),
+      Student(name: 'Ali Ahmad', paymentStatus: 'Pending'),
+      Student(name: 'Abu Murabbi', paymentStatus: 'Completed'),
+      Student(name: 'Ahmad Salah', paymentStatus: 'Completed'),
+      Student(name: 'Mohamad Sane', paymentStatus: 'Pending'),
+    ];
+
     return MaterialApp(
-        title: 'My App',
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Populate A List'),
-            centerTitle: true,
-          ),
-          body: Container(
-            padding: EdgeInsets.all(60),
-            child: ListView(
-              children: refBooks.map((e) {
-                return Container(
-                  child: Text(e),
-                  margin: EdgeInsets.all(5),
-                  padding: EdgeInsets.all(20),
-                  color: Colors.blue[200],
-                );
-              }).toList(),
+      home: MaterialApp(
+          title: 'MyApp',
+          home: Scaffold(
+            appBar: AppBar(
+              title: Text('Student List'),
+              centerTitle: true,
             ),
-          ),
-        ));
+            body: ListView(
+              children: students
+                  .where((e) => e.paymentStatus == 'Completed')
+                  .map((e) => ListTile(
+                        title: Text(e.name),
+                        subtitle: Text(e.paymentStatus),
+                      ))
+                  .toList(),
+            ),
+          )),
+    );
   }
+}
+
+class Student {
+  String name;
+  String paymentStatus;
+
+  Student({
+    required this.name,
+    required this.paymentStatus,
+  });
 }
