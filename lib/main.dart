@@ -8,34 +8,36 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final List<String> langFramework = [
-    'Java Programming',
-    'Front-end development with React',
-    'Next.js Framework',
-    'Restful API using Python',
-    'Cross-platform mobile apps with Google Flutter',
+  List<String> refBooks = [
+    "Java Servlet Programming",
+    "Front-end with Angular",
+    "Linux Administration",
+    "MongoDB for NoSQL",
+    "Microsoft Azure Security",
   ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Record List',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Record List'),
-        ),
-        body: ListView.builder(
-          itemCount: langFramework.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(langFramework[index]),
-            );
-          },
-        ),
-      ),
-    );
+        title: 'My App',
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Populate A List'),
+            centerTitle: true,
+          ),
+          body: Container(
+            padding: EdgeInsets.all(60),
+            child: ListView(
+              children: refBooks.map((e) {
+                return Container(
+                  child: Text(e),
+                  margin: EdgeInsets.all(5),
+                  padding: EdgeInsets.all(20),
+                  color: Colors.blue[200],
+                );
+              }).toList(),
+            ),
+          ),
+        ));
   }
 }
