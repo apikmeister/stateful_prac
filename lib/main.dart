@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyMainPage extends StatefulWidget {
-  const MyMainPage({super.key});
+  const MyMainPage({Key? key});
 
   @override
   State<MyMainPage> createState() => _MyMainPageState();
@@ -43,7 +43,7 @@ class _MyMainPageState extends State<MyMainPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -52,12 +52,19 @@ class _MyMainPageState extends State<MyMainPage> {
                 });
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
       },
     );
+  }
+
+  void _resetInputText() {
+    setState(() {
+      _inputText = '';
+      myController.clear();
+    });
   }
 
   @override
@@ -75,9 +82,19 @@ class _MyMainPageState extends State<MyMainPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showInputDialog,
-        child: const Icon(Icons.edit),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: _showInputDialog,
+            child: const Icon(Icons.edit),
+          ),
+          const SizedBox(height: 16),
+          FloatingActionButton(
+            onPressed: _resetInputText,
+            child: const Icon(Icons.refresh),
+          ),
+        ],
       ),
     );
   }
